@@ -79,6 +79,17 @@ Use the lowest-risk validation that proves impact:
 
 Default a candidate to "needs validation" until a reachable path AND a concrete impact are both shown. Do not escalate beyond what is needed to prove the bug defensively.
 
+## Proof of Concept
+
+Every confirmed finding ships with a benign test that demonstrates it. The test is the proof and the regression guard; authoring it is part of confirming the finding.
+
+- **Floor: a runnable test.** Prefer a unit test on the vulnerable function or handler that feeds a minimal, benign input and asserts the wrong behavior. When the bug only shows at the HTTP/integration layer, write that test instead. Shape it so that, once the bug is fixed, the same test inverts into a passing regression assertion.
+- **Minimal and benign.** Use the smallest input that proves impact: `;id` or `$(id)` for command injection (expect the injected command to run), `' OR '1'='1` against a local test table for SQL injection (expect all rows), `../../etc/passwd` or an absolute path read locally for traversal, a request to `http://169.254.169.254/` or `http://127.0.0.1:<port>/` for SSRF (expect the server-side fetch). Never a reverse shell, data exfiltration, persistence, a privilege-escalation chain, or any payload aimed past demonstration. Never target a third-party system.
+- **Unreachable or latent sinks.** Write a unit test that calls the sink directly with the crafted input and label it: it demonstrates the sink is vulnerable, and the finding becomes live the moment an entry point reaches it. State that condition.
+- **Running it needs a target, so ask.** A pure unit test with no external effect can be run locally without asking. Anything that needs a running service, a dependency install, network egress, or otherwise has side effects: stop and ask the user, and let them choose the environment (local / staging / prod). Default to and strongly prefer local/dev. Never run a PoC against staging or production autonomously, and never against systems the user does not control.
+- **Do not modify application source.** Write the test into the project's test suite or a clearly-labeled scratch path (for example next to the ledger), and reference its path in the finding.
+- **Can't build even a benign test?** Then the finding is unproven. Move it to Needs Validation and say what blocked the demonstration.
+
 ## Triage
 
 Severity depends on both reachability and impact:
@@ -120,5 +131,6 @@ A converged scan has:
 - Covered the agreed scope, or explicitly narrowed it in the ledger.
 - Given every high-priority ranked file/surface at least one focused pass.
 - Run a variant hunt for every confirmed finding.
+- Attached a benign demonstrating test to every confirmed finding.
 - Validated credible findings or labeled them with remaining uncertainty.
 - Produced a report with findings, coverage, commands run, and residual risk.

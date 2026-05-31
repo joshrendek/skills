@@ -24,6 +24,7 @@ adds a same-class variant-hunt item here.
 
 ### Confirmed
 - [SEVERITY] <class> — <file:line> — impact — evidence — remediation
+  - PoC test: <path::test_name> — asserts <wrong behavior> — run: <command> — env: <not-run | local | staging | prod>
 
 ### Needs validation
 - <class> — <file:line> — what is still unproven (reachability? impact?)
