@@ -1,0 +1,5 @@
+# macOS
+.DS_Store
+
+# Backups created by the installer when FORCE-replacing a real dir
+*.bak.*
