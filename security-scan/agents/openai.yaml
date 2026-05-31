@@ -1,0 +1,4 @@
+interface:
+  display_name: "Security Scan"
+  short_description: "Plan and run defensive repo security scans"
+  default_prompt: "Use $security-scan to plan and run a defensive security scan of this repository."

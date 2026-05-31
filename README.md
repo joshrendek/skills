@@ -24,6 +24,7 @@ Run `make list`, or browse the top-level directories. Any directory with a
 | Skill | What it does |
 |---|---|
 | [`handoff`](handoff/) | Condense a session into a durable note the next context resumes from (`/handoff`, `/handoff resume`). |
+| [`security-scan`](security-scan/) | Goal-driven, iterative defensive security scan: ranks files, loops focused passes, validates findings, and hunts variants of each confirmed bug until the worklist converges (`$security-scan`). |
 
 ## Install
 
